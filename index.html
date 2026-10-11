@@ -31,8 +31,8 @@
         padding-top: env(safe-area-inset-top, 0px);
         padding-bottom: env(safe-area-inset-bottom, 0px);
       }
-      /* :root:not([data-theme="light"]) {
-      } */
+      :root:not([data-theme="light"]) {
+      }
       @media (prefers-color-scheme: dark) {
         :root:not([data-theme="light"]) {
           --pcb: #12302a;
@@ -1186,7 +1186,7 @@
                 Engineering Technology (IJRASET), Volume 13, Issue V, May 2025
               </li>
               <li>
-                Co-authors: Ashish Singh, Harsh Gautam, Shlesh Choudhary,
+                Co-authors: Ashish Singh, Shlesh Choudhary, Harsh Gautam,
                 Ayushi, Sakshi (Shriram Group of Colleges, Muzaffarnagar)
               </li>
               <li style="margin-top: 8px">
@@ -1261,6 +1261,56 @@
                 Coursera, 2024
               </li>
               <li>Embedded System, Coursera, 2024</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="ML and AI projects">
+        <span class="screw s1"></span><span class="screw s2"></span
+        ><span class="screw s3"></span><span class="screw s4"></span>
+        <h2 class="engrave">ML &amp; AI projects</h2>
+        <p class="sub engrave">
+          Built during my Machine Learning and AI internship at 1stop.ai
+          (virtual), Sep to Oct 2024, using Python, Pandas, NumPy and
+          Matplotlib.
+        </p>
+        <div class="rack">
+          <div class="slot">
+            <h3 class="engrave"><span class="led on"></span>Text classifier</h3>
+            <ul>
+              <li>Classifies IMDb movie reviews as positive or negative</li>
+              <li>
+                Trained on labelled review data, it predicts sentiment from
+                patterns in the text
+              </li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave">
+              <span class="led amber on"></span>Pet face recognition
+            </h3>
+            <ul>
+              <li>
+                Detects and recognises dog and cat faces using image
+                classification
+              </li>
+              <li>
+                Aims for an accurate, lightweight model that could grow to
+                multi-breed or multi-animal recognition
+              </li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave">
+              <span class="led red on"></span>DeepLandmark
+            </h3>
+            <ul>
+              <li>Detects and classifies landmarks from images</li>
+              <li>
+                Trained on labelled image data and deployed as a live web app
+                with real-time predictions
+              </li>
             </ul>
           </div>
         </div>
