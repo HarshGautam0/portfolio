@@ -1,0 +1,1557 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Harsh Gautam · ECE Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700&family=Barlow:wght@400;500&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --pcb: #1d4535;
+        --pcb2: #163629;
+        --trace: #2f7a5a;
+        --metal1: #e3e6e9;
+        --metal2: #aab0b7;
+        --ink: #2a2e34;
+        --hi: #ffffffb3;
+        --brass: #b8913f;
+        --lcd: #a3b58f;
+        --lcd-ink: #1f2a17;
+        --led-r: #ff3b30;
+        --led-g: #38e06b;
+        --led-a: #ffb020;
+        --chip: #1c1c1e;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      /* :root:not([data-theme="light"]) {
+      } */
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --pcb: #12302a;
+          --pcb2: #0d241f;
+          --trace: #25624a;
+        }
+      }
+      :root[data-theme="dark"] {
+        --pcb: #12302a;
+        --pcb2: #0d241f;
+        --trace: #25624a;
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Barlow, system-ui, sans-serif;
+        color: var(--ink);
+        background-color: var(--pcb);
+        background-image:
+          radial-gradient(circle at 20px 20px, #d9c27a 0 3px, transparent 4px),
+          repeating-linear-gradient(
+            0deg,
+            transparent 0 38px,
+            var(--trace) 38px 41px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent 0 118px,
+            var(--trace) 118px 121px
+          ),
+          linear-gradient(160deg, var(--pcb), var(--pcb2));
+        background-size:
+          80px 80px,
+          auto,
+          auto,
+          auto;
+        line-height: 1.55;
+      }
+      main {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 28px 16px 60px;
+        display: grid;
+        gap: 28px;
+      }
+      h1,
+      h2,
+      h3,
+      .label {
+        font-family: "Saira Condensed", sans-serif;
+        margin: 0;
+      }
+      .panel {
+        position: relative;
+        border-radius: 16px;
+        padding: 28px 26px;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.22) 0 1px,
+            rgba(0, 0, 0, 0.035) 1px 3px
+          ),
+          linear-gradient(#e8ebee, var(--metal2));
+        box-shadow:
+          inset 0 2px 0 #fff,
+          inset 0 -3px 6px rgba(0, 0, 0, 0.28),
+          0 14px 28px rgba(0, 0, 0, 0.55),
+          0 0 0 2px #8b9097;
+      }
+      .screw {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #fff,
+          #9097a0 60%,
+          #5a6068
+        );
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.6),
+          inset 0 -1px 1px rgba(0, 0, 0, 0.3);
+      }
+      .screw::after {
+        content: "";
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        top: 6px;
+        height: 2px;
+        background: #454a50;
+        transform: rotate(var(--r, 35deg));
+      }
+      .s1 {
+        top: 10px;
+        left: 10px;
+      }
+      .s2 {
+        top: 10px;
+        right: 10px;
+        --r: -20deg;
+      }
+      .s3 {
+        bottom: 10px;
+        left: 10px;
+        --r: 80deg;
+      }
+      .s4 {
+        bottom: 10px;
+        right: 10px;
+        --r: 10deg;
+      }
+      .engrave {
+        color: #34383e;
+        text-shadow:
+          0 1px 0 var(--hi),
+          0 -1px 0 rgba(0, 0, 0, 0.25);
+      }
+      h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        margin-bottom: 6px;
+      }
+      .sub {
+        margin: 0 0 20px;
+        max-width: 60ch;
+        color: #3e434a;
+        text-shadow: 0 1px 0 var(--hi);
+      }
+      /* hero */
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(2.4rem, 7vw, 4.2rem);
+        line-height: 1;
+        font-weight: 700;
+      }
+      .hero p.role {
+        margin: 10px 0 0;
+        font-size: 1.1rem;
+      }
+      .lcd {
+        background:
+          linear-gradient(rgba(0, 0, 0, 0.06) 50%, transparent 50%) 0 0/100% 4px,
+          var(--lcd);
+        color: var(--lcd-ink);
+        font-family: VT323, monospace;
+        font-size: 1.45rem;
+        line-height: 1.2;
+        border-radius: 8px;
+        padding: 14px 16px;
+        min-height: 130px;
+        box-shadow:
+          inset 0 4px 10px rgba(0, 0, 0, 0.55),
+          inset 0 0 0 3px #3c4136,
+          0 1px 0 #fff;
+        transition:
+          opacity 0.4s,
+          filter 0.4s;
+      }
+      .lcd.off {
+        filter: brightness(0.55) saturate(0.4);
+        color: #4b5440;
+      }
+      .lcd .cur::after {
+        content: "█";
+        animation: blink 1s steps(1) infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      .power {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      .switch {
+        width: 64px;
+        height: 110px;
+        border-radius: 12px;
+        border: 0;
+        cursor: pointer;
+        padding: 0;
+        position: relative;
+        background: linear-gradient(90deg, #1a1c1f, #3a3e44 50%, #1a1c1f);
+        box-shadow:
+          inset 0 6px 12px #000,
+          0 1px 0 #fff,
+          0 0 0 4px #6c727a;
+      }
+      .switch::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        height: 52px;
+        top: 6px;
+        border-radius: 8px;
+        background: linear-gradient(#f4f5f6, #9aa0a7 55%, #c9cdd1);
+        box-shadow:
+          0 6px 8px rgba(0, 0, 0, 0.6),
+          inset 0 1px 0 #fff;
+        transition: top 0.18s;
+      }
+      .switch[aria-pressed="true"]::after {
+        top: 48px;
+        background: linear-gradient(#c9cdd1, #9aa0a7 45%, #f4f5f6);
+        box-shadow:
+          0 -4px 8px rgba(0, 0, 0, 0.6),
+          inset 0 -1px 0 #fff;
+      }
+      .led {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 30%, #777, #2a1010 70%);
+        box-shadow:
+          inset 0 -1px 2px #000,
+          0 0 0 3px #7a8088,
+          0 1px 0 3px #fff;
+        transition: 0.25s;
+        flex: none;
+      }
+      .led.on {
+        background: radial-gradient(
+          circle at 35% 30%,
+          #fff,
+          var(--led-g) 40%,
+          #0a7a2a
+        );
+        box-shadow:
+          0 0 12px 3px var(--led-g),
+          0 0 0 3px #7a8088;
+      }
+      .led.red.on {
+        background: radial-gradient(
+          circle at 35% 30%,
+          #fff,
+          var(--led-r) 40%,
+          #8a0f08
+        );
+        box-shadow:
+          0 0 12px 3px var(--led-r),
+          0 0 0 3px #7a8088;
+      }
+      .led.amber.on {
+        background: radial-gradient(
+          circle at 35% 30%,
+          #fff,
+          var(--led-a) 40%,
+          #8a5a00
+        );
+        box-shadow:
+          0 0 12px 3px var(--led-a),
+          0 0 0 3px #7a8088;
+      }
+      .leds {
+        display: flex;
+        gap: 10px;
+      }
+      .label {
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+      }
+      /* projects */
+      .rig {
+        display: grid;
+        grid-template-columns: 230px 1fr;
+        gap: 22px;
+      }
+      .sel {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+      }
+      .pbtn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+        font:
+          700 1.15rem "Saira Condensed",
+          sans-serif;
+        color: #2b2f35;
+        cursor: pointer;
+        border: 0;
+        border-radius: 10px;
+        padding: 12px 14px;
+        background: linear-gradient(#fbfbfc, #bfc4ca);
+        box-shadow:
+          0 5px 0 #7c828a,
+          0 8px 10px rgba(0, 0, 0, 0.45),
+          inset 0 1px 0 #fff;
+        transition:
+          transform 0.08s,
+          box-shadow 0.08s;
+      }
+      .pbtn:active,
+      .pbtn[aria-pressed="true"] {
+        transform: translateY(4px);
+        box-shadow:
+          0 1px 0 #7c828a,
+          0 2px 4px rgba(0, 0, 0, 0.5),
+          inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(#b4b9bf, #d5d8dc);
+      }
+      .lcd.big {
+        min-height: 300px;
+        font-size: 1.35rem;
+      }
+      .lcd h3 {
+        font-size: 2rem;
+        font-family: VT323, monospace;
+        font-weight: 400;
+        margin-bottom: 6px;
+        text-transform: none;
+      }
+      .lcd p {
+        margin: 0 0 12px;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 10px;
+        margin-top: 18px;
+      }
+      .ic {
+        position: relative;
+        font:
+          500 0.85rem "Saira Condensed",
+          sans-serif;
+        letter-spacing: 0.05em;
+        color: #d8d8d8;
+        background: linear-gradient(#2b2b2e, var(--chip));
+        padding: 6px 12px;
+        border-radius: 3px;
+        box-shadow:
+          inset 0 1px 0 #555,
+          0 3px 5px rgba(0, 0, 0, 0.5);
+        margin: 0 4px;
+      }
+      .ic::before,
+      .ic::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        bottom: 3px;
+        width: 4px;
+        background: repeating-linear-gradient(
+          #c9ccd1 0 3px,
+          transparent 3px 6px
+        );
+      }
+      .ic::before {
+        left: -4px;
+      }
+      .ic::after {
+        right: -4px;
+      }
+      /* skills */
+      .rack {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+      .slot {
+        border-radius: 10px;
+        padding: 14px;
+        background: linear-gradient(#cfd3d7, #e9ebed);
+        box-shadow:
+          inset 0 3px 8px rgba(0, 0, 0, 0.4),
+          0 1px 0 #fff;
+      }
+      .slot h3 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .slot ul {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 0.95rem;
+      }
+      /* contact */
+      .jacks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 22px;
+      }
+      .jack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: #2b2f35;
+      }
+      .jack i {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          #050505 0 38%,
+          #d2a64c 40% 58%,
+          #6e5420 62% 70%,
+          #c9cdd1 72%
+        );
+        box-shadow:
+          0 4px 8px rgba(0, 0, 0, 0.5),
+          inset 0 0 0 2px #fff6;
+        transition: transform 0.12s;
+      }
+      .jack:hover i,
+      .jack:focus-visible i {
+        transform: scale(1.07);
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid var(--led-a);
+        outline-offset: 3px;
+      }
+      footer {
+        text-align: center;
+        color: #cfe3d8;
+        font-size: 0.9rem;
+      }
+      .skins {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .skins .pbtn {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+        justify-content: center;
+        box-shadow:
+          0 4px 0 #7c828a,
+          0 6px 8px rgba(0, 0, 0, 0.45),
+          inset 0 1px 0 #fff;
+      }
+      :root[data-skin="bakelite"] {
+        --pcb: #1b1613;
+        --pcb2: #0f0c0a;
+        --trace: #2a211b;
+        --lcd: #2a1a05;
+        --lcd-ink: #ffb020;
+      }
+      :root[data-skin="bakelite"] .panel {
+        background:
+          repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.04) 0 1px,
+            transparent 1px 3px
+          ),
+          linear-gradient(#3b322b, #1d1814);
+        box-shadow:
+          inset 0 2px 0 #6b5d50,
+          inset 0 -3px 6px #000,
+          0 14px 28px #000,
+          0 0 0 2px var(--brass);
+      }
+      :root[data-skin="bakelite"] .engrave,
+      :root[data-skin="bakelite"] .sub,
+      :root[data-skin="bakelite"] .label {
+        color: #e6cd8e;
+        text-shadow: 0 1px 0 #000;
+      }
+      :root[data-skin="bakelite"] .lcd {
+        text-shadow: 0 0 6px #ffb02088;
+      }
+      :root[data-skin="bakelite"] .slot {
+        background: linear-gradient(#0f0c0a, #1b1612);
+        color: #d9c79b;
+        box-shadow:
+          inset 0 3px 8px #000,
+          0 1px 0 #6b5d50;
+      }
+      :root[data-skin="cream"] {
+        --lcd: #b7c49c;
+      }
+      :root[data-skin="cream"] body {
+        background: repeating-linear-gradient(
+          90deg,
+          #5a3d26 0 3px,
+          #6d4b2f 3px 7px,
+          #553822 7px 9px
+        );
+      }
+      :root[data-skin="cream"] .panel {
+        background: linear-gradient(#f6eedb, #d8cbad);
+        box-shadow:
+          inset 0 2px 0 #fff,
+          inset 0 -3px 6px rgba(90, 60, 20, 0.35),
+          0 14px 28px rgba(0, 0, 0, 0.6),
+          0 0 0 2px #a38f66;
+      }
+      :root[data-skin="cream"] .engrave,
+      :root[data-skin="cream"] .sub,
+      :root[data-skin="cream"] .label {
+        color: #4a3826;
+        text-shadow: 0 1px 0 #fff9;
+      }
+      :root[data-skin="cream"] footer {
+        color: #e8d7b8;
+      }
+      .board,
+      .bb {
+        display: none;
+        filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.55));
+      }
+      .board svg,
+      .bb svg {
+        display: block;
+        height: auto;
+      }
+      .power {
+        flex-wrap: wrap;
+      }
+      .skins {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: min(250px, 100%);
+      }
+      :root[data-skin="arduino"] .board,
+      :root[data-skin="breadboard"] .bb {
+        display: block;
+      }
+      .blk {
+        animation: blink 1.2s steps(1) infinite;
+      }
+      :root[data-skin="arduino"] {
+        --pcb: #065c61;
+        --pcb2: #033e42;
+        --trace: #1b8a90;
+        --lcd: #b4c7a0;
+      }
+      :root[data-skin="arduino"] .panel {
+        background:
+          radial-gradient(
+              circle,
+              rgba(255, 255, 255, 0.14) 0 1px,
+              transparent 1.5px
+            )
+            0 0/12px 12px,
+          linear-gradient(#0d9aa1, #07777d);
+        box-shadow:
+          inset 0 2px 0 #5fd0d5,
+          inset 0 -3px 6px rgba(0, 0, 0, 0.35),
+          0 14px 28px rgba(0, 0, 0, 0.55),
+          0 0 0 2px #d9b44a;
+      }
+      :root[data-skin="arduino"] .engrave,
+      :root[data-skin="arduino"] .sub,
+      :root[data-skin="arduino"] .label {
+        color: #f2fbfb;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+      }
+      :root[data-skin="arduino"] .slot {
+        background: linear-gradient(#04484c, #06666b);
+        color: #e6f6f6;
+        box-shadow:
+          inset 0 3px 8px rgba(0, 0, 0, 0.5),
+          0 1px 0 #5fd0d5;
+      }
+      :root[data-skin="breadboard"] {
+        --pcb: #33363d;
+        --pcb2: #22242a;
+        --trace: #40444c;
+      }
+      :root[data-skin="breadboard"] .panel {
+        background:
+          radial-gradient(circle, #9a9488 0 1.6px, transparent 2px) 0 0/16px
+            16px,
+          linear-gradient(#f4f0e4, #ddd7c7);
+        box-shadow:
+          inset 0 2px 0 #fff,
+          inset 0 -3px 6px rgba(0, 0, 0, 0.25),
+          0 14px 28px rgba(0, 0, 0, 0.6),
+          0 0 0 2px #b1aa97;
+      }
+      :root[data-skin="breadboard"] .panel::before {
+        content: "";
+        position: absolute;
+        left: 36px;
+        right: 36px;
+        top: 9px;
+        height: 3px;
+        background: #d63a3a;
+        box-shadow: 0 6px 0 #2f6fd6;
+      }
+      :root[data-skin="breadboard"] .engrave,
+      :root[data-skin="breadboard"] .sub,
+      :root[data-skin="breadboard"] .label {
+        color: #2f2e2a;
+        text-shadow: 0 1px 0 #fffc;
+      }
+      :root:is(
+          [data-skin="terminal"],
+          [data-skin="blueprint"],
+          [data-skin="brutal"],
+          [data-skin="glass"],
+          [data-skin="minimal"],
+          [data-skin="neon"]
+        )
+        .screw {
+        display: none;
+      }
+      :root[data-skin="terminal"] {
+        --lcd: #0b1a0f;
+        --lcd-ink: #38e06b;
+      }
+      :root[data-skin="terminal"] body {
+        background: #050805;
+        font-family: VT323, monospace;
+        font-size: 1.25rem;
+      }
+      :root[data-skin="terminal"] .panel {
+        background: #0a0f0a;
+        border: 1px solid #38e06b;
+        border-radius: 4px;
+        box-shadow: 0 0 14px rgba(56, 224, 107, 0.25);
+      }
+      :root[data-skin="terminal"] :is(.engrave, .sub, .label),
+      :root[data-skin="terminal"] footer {
+        color: #38e06b;
+        text-shadow: 0 0 6px rgba(56, 224, 107, 0.5);
+      }
+      :root[data-skin="terminal"] :is(h1, h2, h3, .label, .pbtn) {
+        font-family: VT323, monospace;
+        font-weight: 400;
+      }
+      :root[data-skin="terminal"] h2::before {
+        content: "$ ";
+      }
+      :root[data-skin="terminal"] .slot {
+        background: #050805;
+        color: #7bd88f;
+        border: 1px dashed #1f7a3a;
+        box-shadow: none;
+      }
+      :root[data-skin="terminal"] .pbtn {
+        background: #0a0f0a;
+        color: #38e06b;
+        border: 1px solid #38e06b;
+        box-shadow: none;
+        font-size: 1.2rem;
+      }
+      :root[data-skin="terminal"] .pbtn[aria-pressed="true"] {
+        background: #38e06b;
+        color: #050805;
+        transform: none;
+      }
+      :root[data-skin="blueprint"] {
+        --lcd: #0a2a52;
+        --lcd-ink: #bfe0ff;
+      }
+      :root[data-skin="blueprint"] body {
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px) 0
+            0/24px 24px,
+          linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px)
+            0 0/24px 24px,
+          #0e3a6e;
+      }
+      :root[data-skin="blueprint"] .panel {
+        background: rgba(14, 58, 110, 0.88);
+        border: 2px solid #cfe5ff;
+        border-radius: 2px;
+        box-shadow: none;
+        outline: 1px dashed rgba(207, 229, 255, 0.55);
+        outline-offset: -9px;
+      }
+      :root[data-skin="blueprint"] :is(.engrave, .sub, .label),
+      :root[data-skin="blueprint"] footer {
+        color: #e8f3ff;
+        text-shadow: none;
+      }
+      :root[data-skin="blueprint"] .slot {
+        background: transparent;
+        color: #e8f3ff;
+        border: 1px solid #9cc4f0;
+        box-shadow: none;
+        border-radius: 2px;
+      }
+      :root[data-skin="blueprint"] .pbtn {
+        background: transparent;
+        color: #e8f3ff;
+        border: 1px solid #cfe5ff;
+        box-shadow: none;
+        border-radius: 2px;
+      }
+      :root[data-skin="blueprint"] .pbtn[aria-pressed="true"] {
+        background: #cfe5ff;
+        color: #0e3a6e;
+        transform: none;
+      }
+      :root[data-skin="brutal"] {
+        --lcd: #fff;
+        --lcd-ink: #111;
+      }
+      :root[data-skin="brutal"] body {
+        background: #fff3c4;
+      }
+      :root[data-skin="brutal"] .panel {
+        background: #fff;
+        border: 3px solid #111;
+        border-radius: 0;
+        box-shadow: 7px 7px 0 #111;
+      }
+      :root[data-skin="brutal"] main > section:nth-of-type(4n + 1) {
+        background: #ffd23f;
+      }
+      :root[data-skin="brutal"] main > section:nth-of-type(4n + 2) {
+        background: #ff9ec0;
+      }
+      :root[data-skin="brutal"] main > section:nth-of-type(4n + 3) {
+        background: #8ecbff;
+      }
+      :root[data-skin="brutal"] main > section:nth-of-type(4n) {
+        background: #a6f2a0;
+      }
+      :root[data-skin="brutal"] :is(.engrave, .sub, .label) {
+        color: #111;
+        text-shadow: none;
+      }
+      :root[data-skin="brutal"] .lcd {
+        border: 3px solid #111;
+        border-radius: 0;
+        box-shadow: 4px 4px 0 #111;
+      }
+      :root[data-skin="brutal"] .slot {
+        background: #fff;
+        color: #111;
+        border: 3px solid #111;
+        border-radius: 0;
+        box-shadow: 4px 4px 0 #111;
+      }
+      :root[data-skin="brutal"] .pbtn {
+        background: #fff;
+        color: #111;
+        border: 3px solid #111;
+        border-radius: 0;
+        box-shadow: 4px 4px 0 #111;
+      }
+      :root[data-skin="brutal"] .pbtn[aria-pressed="true"] {
+        background: #ffd23f;
+        transform: translate(4px, 4px);
+        box-shadow: none;
+      }
+      :root[data-skin="glass"] {
+        --lcd: rgba(20, 10, 60, 0.55);
+        --lcd-ink: #fff;
+      }
+      :root[data-skin="glass"] body {
+        background: linear-gradient(135deg, #5b3df5, #d946ef 50%, #ff9a62) fixed;
+      }
+      :root[data-skin="glass"] .panel {
+        background: rgba(255, 255, 255, 0.16);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 24px;
+        box-shadow:
+          0 10px 40px rgba(20, 0, 60, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      }
+      :root[data-skin="glass"] :is(.engrave, .sub, .label),
+      :root[data-skin="glass"] footer {
+        color: #fff;
+        text-shadow: 0 1px 6px rgba(20, 0, 60, 0.35);
+      }
+      :root[data-skin="glass"] .slot {
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: none;
+      }
+      :root[data-skin="glass"] .pbtn {
+        background: rgba(255, 255, 255, 0.24);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: none;
+      }
+      :root[data-skin="glass"] .pbtn[aria-pressed="true"] {
+        background: rgba(255, 255, 255, 0.5);
+        color: #2a0f6b;
+        transform: none;
+      }
+      :root[data-skin="minimal"] {
+        --lcd: #f0efe8;
+        --lcd-ink: #111;
+      }
+      :root[data-skin="minimal"] body {
+        background: #fafaf7;
+      }
+      :root[data-skin="minimal"] main {
+        max-width: 820px;
+      }
+      :root[data-skin="minimal"] .panel {
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0;
+        border-top: 1px solid #111;
+        padding-left: 0;
+        padding-right: 0;
+      }
+      :root[data-skin="minimal"] :is(.engrave, .sub, .label) {
+        color: #111;
+        text-shadow: none;
+      }
+      :root[data-skin="minimal"] footer {
+        color: #555;
+      }
+      :root[data-skin="minimal"] .lcd {
+        background: var(--lcd);
+        border: 1px solid #111;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      :root[data-skin="minimal"] .slot {
+        background: none;
+        color: #111;
+        box-shadow: none;
+        border-radius: 0;
+        border-left: 2px solid #111;
+        padding-left: 14px;
+      }
+      :root[data-skin="minimal"] .pbtn {
+        background: none;
+        color: #111;
+        border: 1px solid #111;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      :root[data-skin="minimal"] .pbtn[aria-pressed="true"] {
+        background: #111;
+        color: #fff;
+        transform: none;
+      }
+      :root[data-skin="neon"] {
+        --lcd: #060a24;
+        --lcd-ink: #00e5ff;
+      }
+      :root[data-skin="neon"] body {
+        background: #05060f;
+      }
+      :root[data-skin="neon"] .panel {
+        background: rgba(10, 14, 40, 0.82);
+        border: 1px solid #00e5ff;
+        border-radius: 0;
+        box-shadow:
+          0 0 18px rgba(0, 229, 255, 0.35),
+          inset 0 0 18px rgba(255, 0, 200, 0.12);
+      }
+      :root[data-skin="neon"] :is(h1, h2) {
+        color: #00e5ff;
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
+      }
+      :root[data-skin="neon"] :is(h3, .label) {
+        color: #ff3df2;
+        text-shadow: 0 0 8px rgba(255, 61, 242, 0.6);
+      }
+      :root[data-skin="neon"] :is(.sub, .role) {
+        color: #b8c4ff;
+        text-shadow: none;
+      }
+      :root[data-skin="neon"] footer {
+        color: #8da0ff;
+      }
+      :root[data-skin="neon"] .slot {
+        background: rgba(0, 229, 255, 0.06);
+        color: #dfe6ff;
+        border: 1px solid #ff3df2;
+        box-shadow: none;
+      }
+      :root[data-skin="neon"] .pbtn {
+        background: transparent;
+        color: #00e5ff;
+        border: 1px solid #00e5ff;
+        box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+      }
+      :root[data-skin="neon"] .pbtn[aria-pressed="true"] {
+        background: rgba(0, 229, 255, 0.25);
+        transform: none;
+      }
+      @media (max-width: 720px) {
+        .hero,
+        .rig {
+          grid-template-columns: 1fr;
+        }
+        .power {
+          flex-direction: row;
+          justify-content: center;
+        }
+        .switch {
+          width: 100px;
+          height: 64px;
+        }
+        .switch::after {
+          width: 46px;
+          height: auto;
+          top: 6px;
+          bottom: 6px;
+          left: 6px;
+          right: auto;
+        }
+        .switch[aria-pressed="true"]::after {
+          left: 48px;
+          top: 6px;
+        }
+        .sel {
+          grid-template-columns: 1fr 1fr;
+        }
+        .panel {
+          padding: 24px 18px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="panel" aria-label="Introduction">
+        <span class="screw s1"></span><span class="screw s2"></span
+        ><span class="screw s3"></span><span class="screw s4"></span>
+        <div class="hero">
+          <div>
+            <h1 class="engrave">Harsh Gautam</h1>
+            <p class="role engrave">
+              Electronics &amp; Communication Engineering graduate. I build
+              Arduino hardware that senses, decides and acts.
+            </p>
+            <div
+              class="lcd off"
+              id="boot"
+              aria-live="polite"
+              style="margin-top: 18px"
+            >
+              <span id="bootText">STANDBY. Flip the power switch.</span>
+            </div>
+          </div>
+          <div class="power">
+            <button
+              class="switch"
+              id="pw"
+              aria-pressed="false"
+              aria-label="Power switch"
+            ></button>
+            <div class="leds">
+              <span class="led" id="pl"></span
+              ><span class="led red" id="rl"></span>
+            </div>
+            <span class="label engrave">POWER</span
+            ><span class="label engrave">SKIN</span>
+            <div class="skins" id="skins"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="board">
+        <svg
+          viewBox="0 0 720 210"
+          width="100%"
+          role="img"
+          aria-label="Arduino Uno board illustration"
+        >
+          <defs>
+            <pattern
+              id="pn"
+              width="14"
+              height="14"
+              patternUnits="userSpaceOnUse"
+            >
+              <rect x="4" y="4" width="6" height="6" fill="#d9b44a" />
+            </pattern>
+          </defs>
+          <rect
+            x="10"
+            y="10"
+            width="700"
+            height="190"
+            rx="14"
+            fill="#0a8f96"
+            stroke="#05666b"
+            stroke-width="3"
+          />
+          <rect
+            x="0"
+            y="44"
+            width="92"
+            height="64"
+            rx="3"
+            fill="#aeb4ba"
+            stroke="#6b7178"
+            stroke-width="2"
+          />
+          <rect x="0" y="128" width="72" height="58" rx="3" fill="#222" />
+          <rect x="150" y="18" width="520" height="22" fill="#1b1b1b" />
+          <rect x="154" y="22" width="512" height="14" fill="url(#pn)" />
+          <rect x="190" y="170" width="470" height="22" fill="#1b1b1b" />
+          <rect x="194" y="174" width="462" height="14" fill="url(#pn)" />
+          <rect x="330" y="84" width="190" height="52" rx="3" fill="#1c1c1e" />
+          <text
+            x="352"
+            y="116"
+            fill="#ccc"
+            font-size="15"
+            font-family="Saira Condensed,sans-serif"
+          >
+            ATMEGA328P
+          </text>
+          <text
+            x="120"
+            y="112"
+            fill="#fff"
+            font-size="30"
+            font-weight="700"
+            font-family="Saira Condensed,sans-serif"
+          >
+            ARDUINO UNO
+          </text>
+          <circle
+            cx="130"
+            cy="156"
+            r="11"
+            fill="#d33"
+            stroke="#fff"
+            stroke-width="2"
+          />
+          <circle class="blk" cx="230" cy="150" r="6" fill="#ffb020" />
+          <circle cx="256" cy="150" r="6" fill="#38e06b" />
+          <circle cx="282" cy="150" r="6" fill="#ff3b30" />
+          <text x="224" y="138" fill="#fff" font-size="12">L TX RX</text>
+        </svg>
+      </div>
+      <div class="bb">
+        <svg
+          viewBox="0 0 720 170"
+          width="100%"
+          role="img"
+          aria-label="Breadboard with LED, resistor and jumper wires"
+        >
+          <defs>
+            <pattern
+              id="hl"
+              width="16"
+              height="16"
+              patternUnits="userSpaceOnUse"
+            >
+              <rect x="5" y="5" width="6" height="6" rx="1" fill="#8f897b" />
+            </pattern>
+          </defs>
+          <rect
+            x="5"
+            y="5"
+            width="710"
+            height="160"
+            rx="10"
+            fill="#f1ecdf"
+            stroke="#bdb6a3"
+            stroke-width="3"
+          />
+          <rect x="24" y="14" width="672" height="32" fill="url(#hl)" />
+          <rect x="24" y="124" width="672" height="32" fill="url(#hl)" />
+          <rect x="24" y="58" width="672" height="26" fill="url(#hl)" />
+          <rect x="24" y="86" width="672" height="6" fill="#cfc8b6" />
+          <rect x="24" y="94" width="672" height="26" fill="url(#hl)" />
+          <path d="M136 78v-26a12 12 0 0 1 24 0v26z" fill="#ff3b30" />
+          <path d="M142 78v14M154 78v14" stroke="#999" stroke-width="3" />
+          <rect x="230" y="62" width="70" height="14" rx="7" fill="#d9b88a" />
+          <rect x="246" y="62" width="5" height="14" fill="#a33" />
+          <rect x="258" y="62" width="5" height="14" fill="#222" />
+          <rect x="270" y="62" width="5" height="14" fill="#b8913f" />
+          <rect x="420" y="66" width="96" height="46" rx="3" fill="#1c1c1e" />
+          <circle cx="432" cy="76" r="4" fill="#444" />
+          <path
+            d="M80 128C80 60 200 60 200 126"
+            stroke="#e53935"
+            stroke-width="6"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M340 130C340 40 470 40 470 64"
+            stroke="#2f6fd6"
+            stroke-width="6"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M560 126C560 70 620 70 620 124"
+            stroke="#f2c230"
+            stroke-width="6"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <section class="panel" aria-label="Projects">
+        <span class="screw s1"></span><span class="screw s2"></span
+        ><span class="screw s3"></span><span class="screw s4"></span>
+        <h2 class="engrave">Hardware projects</h2>
+        <p class="sub engrave">
+          Press a button to load a project onto the display.
+        </p>
+        <div class="rig">
+          <div class="sel" id="sel"></div>
+          <div class="lcd big" id="lcd" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Publication">
+        <span class="screw s1"></span><span class="screw s2"></span
+        ><span class="screw s3"></span><span class="screw s4"></span>
+        <h2 class="engrave">Publication</h2>
+        <p class="sub engrave">
+          The 3D scanner project was written up and published as a research
+          paper.
+        </p>
+        <div class="rack">
+          <div class="slot" style="grid-column: 1/-1">
+            <h3 class="engrave"><span class="led on"></span>3D Scanner</h3>
+            <ul style="list-style: none; padding: 0">
+              <li>
+                International Journal for Research in Applied Science &amp;
+                Engineering Technology (IJRASET), Volume 13, Issue V, May 2025
+              </li>
+              <li>
+                Co-authors: Ashish Singh, Harsh Gautam, Shlesh Choudhary,
+                Ayushi, Sakshi (Shriram Group of Colleges, Muzaffarnagar)
+              </li>
+              <li style="margin-top: 8px">
+                An affordable Arduino Uno scanner that uses a Sharp IR sensor,
+                an SD card module and motor control to capture 3D coordinates
+                and turn them into a model. The paper covers calibration,
+                scanning, data storage and processing, and applications in
+                manufacturing, prosthetics and digital twins.
+              </li>
+              <li style="margin-top: 8px">
+                Keywords: 3D scanning, Arduino-based scanner, sensor
+                calibration, digital twins, cost-effective modelling
+              </li>
+              <li style="margin-top: 10px">
+                <a
+                  href="https://www.ijraset.com/best-journal/3d-scanner"
+                  target="_blank"
+                  rel="noopener"
+                  style="color: inherit"
+                  >Read the paper</a
+                >
+                &nbsp;|&nbsp;
+                <a
+                  href="https://doi.org/10.22214/ijraset.2025.70429"
+                  target="_blank"
+                  rel="noopener"
+                  style="color: inherit"
+                  >DOI: 10.22214/ijraset.2025.70429</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Education and experience">
+        <span class="screw s1"></span><span class="screw s2"></span
+        ><span class="screw s3"></span><span class="screw s4"></span>
+        <h2 class="engrave">Background</h2>
+        <p class="sub engrave">Where I studied, interned and trained.</p>
+        <div class="rack">
+          <div class="slot">
+            <h3 class="engrave"><span class="led on"></span>Education</h3>
+            <ul>
+              <li>B.Tech, Electronics and Communication Engineering</li>
+              <li>Dr. A. P. J. Abdul Kalam Technical University, Lucknow</li>
+              <li>Graduated July 2025, CGPA 7.36</li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave">
+              <span class="led amber on"></span>Internship
+            </h3>
+            <ul>
+              <li>
+                Machine Learning and AI Intern, 1stop.ai (virtual), Sep to Oct
+                2024
+              </li>
+              <li>
+                Built a text classifier, pet face recognition and landmark
+                detection with Pandas, NumPy and Matplotlib
+              </li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave">
+              <span class="led red on"></span>Certifications
+            </h3>
+            <ul>
+              <li>
+                IT Security: Defense Against the Digital Dark Arts, Google on
+                Coursera, 2024
+              </li>
+              <li>Embedded System, Coursera, 2024</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Web projects">
+        <span class="screw s1"></span><span class="screw s2"></span
+        ><span class="screw s3"></span><span class="screw s4"></span>
+        <h2 class="engrave">Web projects</h2>
+        <p class="sub engrave">
+          Front-end builds in HTML, CSS and JavaScript. Code is on my
+          <a
+            href="https://github.com/HarshGautam0"
+            target="_blank"
+            rel="noopener"
+            style="color: inherit"
+            >GitHub</a
+          >.
+        </p>
+        <div class="rack">
+          <div class="slot">
+            <h3 class="engrave"><span class="led on"></span>Fitsphere</h3>
+            <ul>
+              <li>Fitness app, my largest front-end project</li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave">
+              <span class="led amber on"></span>Weather app
+            </h3>
+            <ul>
+              <li>Look up the weather for a place</li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave">
+              <span class="led red on"></span>Currency converter
+            </h3>
+            <ul>
+              <li>Convert an amount between currencies</li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave"><span class="led on"></span>Homepage clones</h3>
+            <ul>
+              <li>Netflix</li>
+              <li>Hotstar</li>
+              <li>Amazon</li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave"><span class="led amber on"></span>Games</h3>
+            <ul>
+              <li>Rock paper scissors</li>
+              <li>Tic tac toe</li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave"><span class="led red on"></span>Mini tools</h3>
+            <ul>
+              <li>Calculator and stopwatch</li>
+              <li>Notes</li>
+              <li>Password and quote generators</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Skills">
+        <span class="screw s1"></span><span class="screw s2"></span
+        ><span class="screw s3"></span><span class="screw s4"></span>
+        <h2 class="engrave">Skills</h2>
+        <p class="sub engrave">What I used across these four builds.</p>
+        <div class="rack">
+          <div class="slot">
+            <h3 class="engrave"><span class="led on"></span>Sensing</h3>
+            <ul>
+              <li>Sharp IR and ultrasonic ranging</li>
+              <li>MQ6 gas sensor</li>
+              <li>DHT temperature and humidity</li>
+              <li>Laser and LDR beam detection</li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave"><span class="led amber on"></span>Actuation</h3>
+            <ul>
+              <li>Stepper motors with drivers</li>
+              <li>Servo motors</li>
+              <li>Relays, exhaust fan, gas valve shutoff</li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave"><span class="led red on"></span>Systems</h3>
+            <ul>
+              <li>Arduino programming</li>
+              <li>GSM SMS alerts</li>
+              <li>SD card data logging</li>
+              <li>Point cloud processing</li>
+              <li>Solar power integration</li>
+              <li>IoT with NodeMCU</li>
+              <li>C programming</li>
+              <li>Machine learning and AI in Python</li>
+            </ul>
+          </div>
+          <div class="slot">
+            <h3 class="engrave"><span class="led on"></span>Web</h3>
+            <ul>
+              <li>HTML, CSS, JavaScript</li>
+              <li>Responsive interfaces</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Contact">
+        <span class="screw s1"></span><span class="screw s2"></span
+        ><span class="screw s3"></span><span class="screw s4"></span>
+        <h2 class="engrave">Contact</h2>
+        <p class="sub engrave">
+          Plug in and say hello. Based in Shamli, Uttar Pradesh, open to
+          embedded, IoT and electronics roles.
+        </p>
+        <div class="jacks">
+          <a class="jack" href="mailto:hg699810@gmail.com"
+            ><i></i><span class="label">Email</span></a
+          >
+          <a
+            class="jack"
+            href="https://www.linkedin.com/in/harsh-gautam-23625127a/"
+            target="_blank"
+            rel="noopener"
+            ><i></i><span class="label">LinkedIn</span></a
+          >
+          <a
+            class="jack"
+            href="https://github.com/HarshGautam0"
+            target="_blank"
+            rel="noopener"
+            ><i></i><span class="label">GitHub</span></a
+          >
+          <a class="jack" href="tel:+918171732587"
+            ><i></i><span class="label">Phone</span></a
+          >
+        </div>
+      </section>
+      <footer>Designed like the hardware it describes.</footer>
+    </main>
+    <script>
+      const P = [
+        {
+          n: "3D Scanner",
+          led: "on",
+          t: "Arduino scanning rig that measures distance with Sharp IR and ultrasonic sensors while a stepper motor turns the object through 360°. Readings are logged to an SD card and processed into a point cloud for 3D reconstruction. Built as an affordable, accurate option for prototyping and teaching.",
+          c: [
+            "Arduino",
+            "Sharp IR",
+            "Ultrasonic",
+            "Stepper + driver",
+            "SD module",
+            "Point cloud",
+          ],
+        },
+        {
+          n: "Solar Rover",
+          led: "amber",
+          t: "Solar-powered rover prototype controlled by Arduino. DHT and humidity sensors monitor the environment, and servo motors handle movement. Aimed at renewable energy and automation for remote sensing.",
+          c: [
+            "Arduino UNO",
+            "NodeMCU",
+            "Solar power",
+            "DHT sensor",
+            "Humidity",
+            "Servo motors",
+          ],
+        },
+        {
+          n: "LPG Leak Guard",
+          led: "red",
+          t: "Safety system that detects LPG leaks with an MQ6 sensor and sounds a buzzer. It sends SMS alerts through a GSM module, switches on an exhaust fan and shuts off the gas valve automatically to prevent accidents.",
+          c: [
+            "Arduino",
+            "MQ6 sensor",
+            "GSM module",
+            "Buzzer",
+            "Exhaust fan",
+            "Valve shutoff",
+          ],
+        },
+        {
+          n: "Laser Door Alarm",
+          led: "red",
+          t: "Security circuit that aims a laser at an LDR. When the beam is interrupted, the alarm sounds instantly, guarding a door or an area against intrusion.",
+          c: ["Laser", "LDR", "Alarm", "Beam detection"],
+        },
+      ];
+      const sel = document.getElementById("sel"),
+        lcd = document.getElementById("lcd");
+      let cur = 0;
+      P.forEach((p, i) => {
+        const b = document.createElement("button");
+        b.className = "pbtn";
+        b.setAttribute("aria-pressed", "false");
+        b.innerHTML =
+          '<span class="led ' +
+          (p.led === "on" ? "" : p.led) +
+          '"></span>' +
+          p.n;
+        b.onclick = () => show(i);
+        sel.appendChild(b);
+      });
+      function show(i) {
+        cur = i;
+        [...sel.children].forEach((b, j) => {
+          b.setAttribute("aria-pressed", j === i);
+          b.firstChild.classList.toggle("on", j === i);
+        });
+        const p = P[i];
+        lcd.innerHTML =
+          "<h3>&gt; " +
+          p.n +
+          "</h3><p>" +
+          p.t +
+          '</p><div class="chips">' +
+          p.c.map((x) => '<span class="ic">' + x + "</span>").join("") +
+          "</div>";
+      }
+      show(0);
+      const pw = document.getElementById("pw"),
+        bt = document.getElementById("bootText"),
+        boot = document.getElementById("boot"),
+        pl = document.getElementById("pl"),
+        rl = document.getElementById("rl");
+      let tm;
+      const msg =
+        "SYSTEM ONLINE.\nHi, I'm Harsh, a B.Tech ECE graduate building embedded and IoT systems. Pick a project below.";
+      pw.onclick = () => {
+        const on = pw.getAttribute("aria-pressed") !== "true";
+        pw.setAttribute("aria-pressed", on);
+        pl.classList.toggle("on", on);
+        rl.classList.toggle("on", on);
+        boot.classList.toggle("off", !on);
+        clearInterval(tm);
+        if (!on) {
+          bt.textContent = "STANDBY. Flip the power switch.";
+          return;
+        }
+        if (matchMedia("(prefers-reduced-motion:reduce)").matches) {
+          bt.innerText = msg;
+          return;
+        }
+        let k = 0;
+        bt.innerHTML = "";
+        tm = setInterval(() => {
+          k++;
+          bt.innerHTML =
+            msg.slice(0, k).replace(/\n/g, "<br>") +
+            '<span class="cur"></span>';
+          if (k >= msg.length) {
+            clearInterval(tm);
+            bt.innerHTML = msg.replace(/\n/g, "<br>");
+          }
+        }, 28);
+      };
+      const SK = [
+          ["metal", "Metal"],
+          ["bakelite", "Bakelite"],
+          ["cream", "Cream"],
+          ["arduino", "Arduino"],
+          ["breadboard", "Breadboard"],
+          ["terminal", "Terminal"],
+          ["blueprint", "Blueprint"],
+          ["brutal", "Neo-brutal"],
+          ["glass", "Glass"],
+          ["minimal", "Minimal"],
+          ["neon", "Neon"],
+        ],
+        sk = document.getElementById("skins");
+      SK.forEach(([id, nm], i) => {
+        const b = document.createElement("button");
+        b.className = "pbtn";
+        b.textContent = nm;
+        b.setAttribute("aria-pressed", i === 0);
+        b.onclick = () => {
+          if (id === "metal") delete document.documentElement.dataset.skin;
+          else document.documentElement.dataset.skin = id;
+          [...sk.children].forEach((x, j) =>
+            x.setAttribute("aria-pressed", j === i),
+          );
+        };
+        sk.appendChild(b);
+      });
+    </script>
+  </body>
+</html>
